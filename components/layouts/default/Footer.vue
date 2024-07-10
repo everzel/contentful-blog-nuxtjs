@@ -1,0 +1,84 @@
+<script setup lang="ts">
+import type { INavigation } from "@/services/contentful/controllers/navigation.ts";
+import type { Ref } from "vue";
+import type { ISocialLink } from "@/services/contentful/controllers/socialLink.ts";
+import type { IProps as ISocialIconProps } from "@/components/common/SocialIcon.vue";
+import type { Store } from "pinia";
+import type { IHeaderActions, IHeaderGetters, IHeaderState } from "@/stores/footer.ts";
+import { useFooterStore } from "@/stores/footer.ts";
+import Logo from "@/components/common/Logo.vue";
+import SocialIcon from "@/components/common/SocialIcon.vue";
+import { getNavigation } from "@/services/contentful/controllers/navigation.ts";
+
+const socialLinks: Ref<ISocialLink[]> = ref([]);
+
+const store: Store<
+  'footer-store',
+  IHeaderState,
+  IHeaderGetters,
+  IHeaderActions
+> = useFooterStore();
+
+if (store.getSocialLinks.length) {
+  socialLinks.value = store.socialLinks;
+} else {
+  const {
+    data: navigationData,
+  }: {
+    data: Ref<INavigation>;
+  } = await useAsyncData(
+    'footer-navigation',
+    async (): Promise<INavigation> => await getNavigation('footer')
+  );
+
+  socialLinks.value = navigationData.value.socialLinks;
+  store.setSocialLinks(navigationData.value.socialLinks);
+}
+
+const getSocialIconType = (type: ISocialLink['type']): string | null => {
+  switch (type) {
+    case 'Twitter (X)':
+      return 'twitter';
+
+    case 'Instagram':
+      return 'instagram';
+
+    default:
+      return null;
+  }
+};
+</script>
+
+<template>
+  <footer class="w-full bg-slate-50 border-t border-solid border-indigo-100">
+    <div class="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+      <div class="py-7">
+        <div class="flex items-center justify-between">
+          <NuxtLink
+            :to="{ name: 'index' }"
+            class="flex items-center"
+          >
+            <Logo
+              class="text-black w-[200px]"
+            />
+          </NuxtLink>
+
+          <div
+            v-if="socialLinks.length"
+            class="flex space-x-4 sm:justify-center"
+          >
+            <template
+              v-for="socialLink in socialLinks"
+            >
+              <SocialIcon
+                v-if="getSocialIconType(socialLink.type)"
+                :href="socialLink.url"
+                :type="getSocialIconType(socialLink.type) as ISocialIconProps['type']"
+              />
+            </template>
+          </div>
+        </div>
+      </div>
+    </div>
+  </footer>
+</template>
