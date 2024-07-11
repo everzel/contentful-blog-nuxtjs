@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import type { IBlogPostCard } from "@/services/contentful/controllers/blogPost.ts";
+import type { PostCardData } from "@/services/contentful/types/controllers/blog/post/list-controller.d.ts";
 import BlogAuthorCard from "@/components/blog/common/AuthorCard.vue";
 import { useFormatDate } from "@/composables/useDate.ts";
 import { weservImage } from "@/services/weserv.ts";
 
-interface IProps {
-  post: IBlogPostCard;
+interface ComponentProps {
+  post: PostCardData;
 }
 
-defineProps<IProps>();
+defineProps<ComponentProps>();
 </script>
 
 <template>

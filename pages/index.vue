@@ -1,27 +1,27 @@
 <script setup lang="ts">
+import type { PostCardData } from "@/services/contentful/types/controllers/blog/post/list-controller.d.ts";
 import type { Ref } from "vue";
-import type { IPage } from "@/services/contentful/controllers/page.ts";
-import type { IBlogPostCard } from "@/services/contentful/controllers/blogPost.ts";
+import type { PageItemData } from "@/services/contentful/types/controllers/page/get-controller.d.ts";
 import BlogListCard from "@/components/blog/list/Card.vue";
 import BlogCardListGrid from "@/components/blog/list/CardGrid.vue";
 import TopographyHeading from "@/components/topography/Heading.vue";
-import { getPage } from "@/services/contentful/controllers/page.ts";
-import { getBlogPosts } from "@/services/contentful/controllers/blogPost.ts";
+import { getBlogPosts } from "@/services/contentful/controllers/blog/post/list-controller.ts";
+import { getPage } from "@/services/contentful/controllers/page/get-controller.ts";
 
 const {
   data: posts,
 }: {
-  data: Ref<IBlogPostCard[]>,
+  data: Ref<PostCardData[]>,
 } = await useAsyncData(
-  async (): Promise<IBlogPostCard[]> => await getBlogPosts(),
+  async (): Promise<PostCardData[]> => await getBlogPosts(),
 );
 
 const {
   data: pageData,
 }: {
-  data: Ref<IPage>,
+  data: Ref<PageItemData>,
 } = await useAsyncData(
-  async (): Promise<IPage> => await getPage('homepage'),
+  async (): Promise<PageItemData> => await getPage('homepage'),
 );
 
 const metaData: object = await useGetMeta(

@@ -1,7 +1,7 @@
-import type { IMeta } from "@/services/contentful/controllers/meta.ts";
 import type { RouteLocationNormalizedLoaded } from "vue-router";
+import type { MetaItemData } from "@/services/contentful/types/meta.d.ts";
 
-export const useGetMeta = async (meta: IMeta, route: RouteLocationNormalizedLoaded): Promise<object> => {
+export const useGetMeta = async (meta: MetaItemData, route: RouteLocationNormalizedLoaded): Promise<object> => {
   const config: {
     appUrl: string;
   } = useRuntimeConfig().public;

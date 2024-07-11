@@ -1,22 +1,21 @@
 <script setup lang="ts">
-import type { INavigation } from "@/services/contentful/controllers/navigation.ts";
 import type { Ref } from "vue";
-import type { ISocialLink } from "@/services/contentful/controllers/socialLink.ts";
-import type { IProps as ISocialIconProps } from "@/components/common/SocialIcon.vue";
+import type { ComponentProps as ISocialIconProps } from "@/components/common/SocialIcon.vue";
 import type { Store } from "pinia";
-import type { IHeaderActions, IHeaderGetters, IHeaderState } from "@/stores/footer.ts";
-import { useFooterStore } from "@/stores/footer.ts";
+import type { HeaderState, HeaderGetters, HeaderActions } from "@/stores/footer.ts";
+import type { NavigationItemData, NavigationSocialLinkItemData } from "@/services/contentful/types/controllers/navigation/get-controller.d.ts";
 import Logo from "@/components/common/Logo.vue";
 import SocialIcon from "@/components/common/SocialIcon.vue";
-import { getNavigation } from "@/services/contentful/controllers/navigation.ts";
+import { useFooterStore } from "@/stores/footer.ts";
+import { getNavigationItem } from "@/services/contentful/controllers/navigation/get-controller.ts";
 
-const socialLinks: Ref<ISocialLink[]> = ref([]);
+const socialLinks: Ref<NavigationSocialLinkItemData[]> = ref([]);
 
 const store: Store<
   'footer-store',
-  IHeaderState,
-  IHeaderGetters,
-  IHeaderActions
+  HeaderState,
+  HeaderGetters,
+  HeaderActions
 > = useFooterStore();
 
 if (store.getSocialLinks.length) {
@@ -25,17 +24,17 @@ if (store.getSocialLinks.length) {
   const {
     data: navigationData,
   }: {
-    data: Ref<INavigation>;
+    data: Ref<NavigationItemData>;
   } = await useAsyncData(
     'footer-navigation',
-    async (): Promise<INavigation> => await getNavigation('footer')
+    async (): Promise<NavigationItemData> => await getNavigationItem('footer')
   );
 
   socialLinks.value = navigationData.value.socialLinks;
-  store.setSocialLinks(navigationData.value.socialLinks);
+  store.setSocialLinks(socialLinks.value);
 }
 
-const getSocialIconType = (type: ISocialLink['type']): string | null => {
+const getSocialIconType = (type: NavigationSocialLinkItemData['type']): string | null => {
   switch (type) {
     case 'Twitter (X)':
       return 'twitter';

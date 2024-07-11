@@ -1,29 +1,13 @@
-import type { IMeta } from "@/services/contentful/controllers/meta.ts";
+import type {
+  PageContentfulData,
+  PageContentfulItemData,
+  PageItemData,
+} from "@/services/contentful/types/controllers/page/get-controller.d.ts";
+
 import { gql } from 'graphql-request';
 import contentfulClient from "@/services/contentful/client.ts";
 
-export interface IPage {
-  meta: IMeta;
-}
-
-export const getPage = async (slug: string): Promise<IPage> => {
-  interface IPageItemData {
-    meta: {
-      title: string;
-      description: string;
-      image: {
-        url: string;
-      };
-      indexable: boolean;
-    };
-  }
-
-  interface IPageData {
-    pageCollection: {
-      items: IPageItemData[];
-    }
-  }
-
+export const getPage = async (slug: string): Promise<PageItemData> => {
   const query: string = gql`
       query {
           pageCollection(where: { slug: "${slug}" }) {
@@ -40,7 +24,9 @@ export const getPage = async (slug: string): Promise<IPage> => {
       }
   `;
 
-  const data: IPageItemData = (await contentfulClient<IPageData>(query)).pageCollection.items[0];
+  const data: PageContentfulItemData = (await contentfulClient<PageContentfulData>(query))
+    .pageCollection
+    .items[0];
 
   return {
     meta: {

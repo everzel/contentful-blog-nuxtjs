@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import type { IBlogAuthorCard } from "@/services/contentful/controllers/blogAuthor.ts";
+import type {PostAuthorData} from "~/services/contentful/types/controllers/blog/post/common";
 
-interface IProps {
-  author: IBlogAuthorCard;
+interface ComponentProps {
+  author: PostAuthorData;
   size?: 'small' | 'large';
   color?: 'white' | 'black';
   type?: 'link' | 'block';
 }
 
-withDefaults(defineProps<IProps>(), {
+withDefaults(defineProps<ComponentProps>(), {
   size: 'small',
   color: 'black',
   type: 'block',
