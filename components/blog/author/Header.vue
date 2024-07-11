@@ -3,7 +3,7 @@ import type { AuthorPageData } from "@/services/contentful/types/controllers/blo
 import TopographyHeading from "@/components/topography/Heading.vue";
 import BackButton from "@/components/common/BackButton.vue";
 import defaultBackground from "@/assets/images/author/author-bg.png";
-import { weservImage } from "@/services/weserv.ts";
+import { useWsrvImage } from "@/composables/useWsrv.ts";
 
 interface ComponentProps {
   author: AuthorPageData;
@@ -12,7 +12,7 @@ interface ComponentProps {
 const props = defineProps<ComponentProps>();
 
 const backgroundUrl: string = props.author.background_url
-  ? weservImage({ imageUrl: props.author.background_url, width: 1400 })
+  ? useWsrvImage({ imageUrl: props.author.background_url, width: 1400 })
   : defaultBackground;
 </script>
 
@@ -36,8 +36,8 @@ const backgroundUrl: string = props.author.background_url
       <div class="w-full max-w-7xl mx-auto px-6 md:px-8">
         <div class="flex items-center justify-center sm:justify-start relative z-10 mb-5">
           <img
-            :src="weservImage({ imageUrl: author.image_url, width: 200 })"
-            :srcset="`${weservImage({ imageUrl: author.image_url, width: 400 })} 2x`"
+            :src="useWsrvImage({ imageUrl: author.image_url, width: 200 })"
+            :srcset="`${useWsrvImage({ imageUrl: author.image_url, width: 400 })} 2x`"
             :alt="author.name"
             class="border-4 border-solid border-white rounded-full w-[200px]"
           >

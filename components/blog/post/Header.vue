@@ -4,7 +4,7 @@ import BlogAuthorCard from "@/components/blog/common/AuthorCard.vue";
 import BackButton from "@/components/common/BackButton.vue";
 import TopographyHeading from "@/components/topography/Heading.vue";
 import { useFormatDate } from "@/composables/useDate.ts";
-import { weservImage } from "@/services/weserv.ts";
+import { useWsrvImage } from "@/composables/useWsrv.ts";
 
 interface ComponentProps {
   post: PostPageData;
@@ -16,7 +16,7 @@ defineProps<ComponentProps>();
 <template>
   <section
     :style="{
-        background: `url(${weservImage({ imageUrl: post.image_url, width: 1400 })}) no-repeat center center / cover`
+        background: `url(${useWsrvImage({ imageUrl: post.image_url, width: 1400 })}) no-repeat center center / cover`
       }"
     class="relative"
   >
