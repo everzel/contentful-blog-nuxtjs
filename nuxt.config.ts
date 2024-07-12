@@ -29,7 +29,7 @@ export default defineNuxtConfig({
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
       },
 
-      wsrvBaseUrl: process.env.WESERV_BASE_URL,
+      wsrvBaseUrl: process.env.WSRV_BASE_URL,
     },
   },
 
