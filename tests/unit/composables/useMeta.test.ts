@@ -1,5 +1,5 @@
 import type { MetaItemData } from "@/services/contentful/types/meta.d.ts";
-import { Assertion, describe, expect, it, vi } from "vitest";
+import { describe, expect, it } from "vitest";
 import { useGetMeta } from "@/composables/useMeta.ts";
 import { mockNuxtImport } from "@nuxt/test-utils/runtime";
 
@@ -33,7 +33,7 @@ mockNuxtImport('useRoute', () => {
 
 mockNuxtImport('useRuntimeConfig', () => {
   return (): object => mocksParams.useRuntimeConfig;
-})
+});
 
 function makeMetaItemData(): MetaItemData {
   return {
@@ -50,7 +50,7 @@ describe('useMeta composition', (): void => {
 
     const canonicalUrl = `${mocksParams.useRuntimeConfig.public.appUrl}${mocksParams.useRoute.path}`;
 
-    expect<Assertion>(useGetMeta(meta, useRoute()))
+    expect(useGetMeta(meta, useRoute()))
       .toStrictEqual({
         title: meta.title,
 

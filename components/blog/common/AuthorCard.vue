@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import type {PostAuthorData} from "~/services/contentful/types/controllers/blog/post/common";
+import type { PostAuthorData } from "@/services/contentful/types/controllers/blog/post/common.d.ts";
+import { useWsrvImage } from "@/composables/useWsrv.ts";
 
 interface ComponentProps {
   author: PostAuthorData;
@@ -8,11 +9,19 @@ interface ComponentProps {
   type?: 'link' | 'block';
 }
 
-withDefaults(defineProps<ComponentProps>(), {
+const props = withDefaults(defineProps<ComponentProps>(), {
   size: 'small',
   color: 'black',
   type: 'block',
 });
+
+const avatarUrl: string = props.size === 'small'
+  ? useWsrvImage({ imageUrl: props.author.image_url, width: 40 })
+  : useWsrvImage({ imageUrl: props.author.image_url, width: 50 });
+
+const avatar2xUrl: string = props.size === 'small'
+  ? useWsrvImage({ imageUrl: props.author.image_url, width: 80 })
+  : useWsrvImage({ imageUrl: props.author.image_url, width: 100 });
 </script>
 
 <template>
@@ -26,7 +35,8 @@ withDefaults(defineProps<ComponentProps>(), {
     }"
   >
     <img
-      :src="author.image_url"
+      :src="avatarUrl"
+      :srcset="`${avatar2xUrl} 2x`"
       :alt="author.name"
       class="rounded-full group-hover:opacity-70 transition-all"
       :class="{
@@ -76,7 +86,8 @@ withDefaults(defineProps<ComponentProps>(), {
     }"
   >
     <img
-      :src="author.image_url"
+      :src="avatarUrl"
+      :srcset="`${avatar2xUrl} 2x`"
       :alt="author.name"
       class="rounded-full"
       :class="{
