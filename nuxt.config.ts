@@ -29,10 +29,14 @@ export default defineNuxtConfig({
         accessToken: process.env.CONTENTFUL_ACCESS_TOKEN,
       },
 
-      weservBaseUrl: process.env.WESERV_BASE_URL,
+      wsrvBaseUrl: process.env.WESERV_BASE_URL,
     },
   },
 
-  modules: ['@pinia/nuxt', "@nuxt/image"],
+  modules: [
+    '@pinia/nuxt',
+    '@nuxt/test-utils/module',
+  ],
+
   compatibilityDate: '2024-07-10',
 })

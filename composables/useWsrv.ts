@@ -1,4 +1,4 @@
-interface WsrvImageParams {
+export interface WsrvImageParams {
   imageUrl: string;
   width: number;
 }
@@ -6,7 +6,7 @@ interface WsrvImageParams {
 export const useWsrvImage = (params: WsrvImageParams): string => {
   const config: {
     appUrl: string;
-    weservBaseUrl: string;
+    wsrvBaseUrl: string;
   } = useRuntimeConfig().public;
 
   let imageUrl = params.imageUrl;
@@ -22,5 +22,5 @@ export const useWsrvImage = (params: WsrvImageParams): string => {
     output: 'webp',
   });
 
-  return `${config.weservBaseUrl}?${queryParams.toString()}`;
+  return `${config.wsrvBaseUrl}?${queryParams.toString()}`;
 };
