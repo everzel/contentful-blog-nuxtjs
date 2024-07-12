@@ -3,8 +3,8 @@ import { describe, expect, it } from "vitest";
 import { mockNuxtImport, mountSuspended } from "@nuxt/test-utils/runtime";
 import { useWsrvImage } from "@/composables/useWsrv.ts";
 import { useFormatDate } from "@/composables/useDate.ts";
-import Card from "@/components/blog/list/Card.vue";
 import { VueWrapper } from "@vue/test-utils";
+import Card from "@/components/blog/list/Card.vue";
 
 // Just for practice
 
@@ -42,8 +42,8 @@ function mockPostCardData(): PostCardData {
   };
 }
 
-describe('Blog List Card Component', (): void => {
-  it('should render blog list card component', async (): Promise<void> => {
+describe('Blog List Card Component', () => {
+  it('should render blog list card component', async () => {
     const postCardData: PostCardData = mockPostCardData();
 
     const component: VueWrapper = await mountSuspended(Card, {

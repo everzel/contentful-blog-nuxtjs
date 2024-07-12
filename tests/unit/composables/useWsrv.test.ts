@@ -21,8 +21,8 @@ mockNuxtImport('useRuntimeConfig', () => {
   return (): object => useRuntimeConfigMockParams;
 });
 
-describe('useWsrv composition', (): void => {
-  it('should return wsrv image\'s URL', (): void => {
+describe('useWsrv composition', () => {
+  it('should return wsrv image\'s URL', () => {
     const queryParams: URLSearchParams = new URLSearchParams({
       w: '100',
       url: 'https://example.com/image.jpg',
@@ -40,7 +40,7 @@ describe('useWsrv composition', (): void => {
     expect(useWsrvImage(params)).toBe(expectedResult);
   });
 
-  it('should return wsrv image\'s URL from local path', (): void => {
+  it('should return wsrv image\'s URL from local path', () => {
     const queryParams: URLSearchParams = new URLSearchParams({
       w: '100',
       url: `${useRuntimeConfigMockParams.public.appUrl}/image.jpg`,

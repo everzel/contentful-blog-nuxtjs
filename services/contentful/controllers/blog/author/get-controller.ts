@@ -5,7 +5,6 @@ import type {
   AuthorContentfulItemData,
   AuthorPageData,
 } from "@/services/contentful/types/controllers/blog/author/get-controller.d.ts";
-
 import contentfulClient from "@/services/contentful/client.ts";
 import { gql } from "graphql-request";
 

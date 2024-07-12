@@ -44,8 +44,8 @@ function makeMetaItemData(): MetaItemData {
   };
 }
 
-describe('useMeta composition', (): void => {
-  it('should return meta data for Nuxt\'s useHead function', (): void => {
+describe('useMeta composition', () => {
+  it('should return meta data for Nuxt\'s useHead function', () => {
     const meta: MetaItemData = makeMetaItemData();
 
     const canonicalUrl = `${mocksParams.useRuntimeConfig.public.appUrl}${mocksParams.useRoute.path}`;
