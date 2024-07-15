@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import showdown from "showdown";
 
-interface IProps {
+interface ComponentProps {
   content: string;
 }
 
-const props = defineProps<IProps>();
+const props = defineProps<ComponentProps>();
 
 const htmlContent: string = new showdown
   .Converter()

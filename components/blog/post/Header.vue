@@ -1,22 +1,22 @@
 <script setup lang="ts">
-import type { IBlogPostPage } from "@/services/contentful/controllers/blogPost.ts";
+import type { PostPageData } from "@/services/contentful/types/controllers/blog/post/get-controller.d.ts";
 import BlogAuthorCard from "@/components/blog/common/AuthorCard.vue";
 import BackButton from "@/components/common/BackButton.vue";
 import TopographyHeading from "@/components/topography/Heading.vue";
 import { useFormatDate } from "@/composables/useDate.ts";
-import { weservImage } from "@/services/weserv.ts";
+import { useWsrvImage } from "@/composables/useWsrv.ts";
 
-interface IProps {
-  post: IBlogPostPage;
+interface ComponentProps {
+  post: PostPageData;
 }
 
-defineProps<IProps>();
+defineProps<ComponentProps>();
 </script>
 
 <template>
   <section
     :style="{
-        background: `url(${weservImage({ imageUrl: post.image_url, width: 1400 })}) no-repeat center center / cover`
+        background: `url(${useWsrvImage({ imageUrl: post.image_url, width: 1400 })}) no-repeat center center / cover`
       }"
     class="relative"
   >

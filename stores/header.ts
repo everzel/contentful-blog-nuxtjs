@@ -1,35 +1,35 @@
-import type { ILink } from "@/services/contentful/controllers/link.ts";
 import type { StoreDefinition } from "pinia";
+import type { NavigationLinkItemData } from "@/services/contentful/types/controllers/navigation/get-controller";
 import { defineStore } from "pinia";
 
-export interface IHeaderState {
-  links: ILink[];
+export interface HeaderState {
+  links: NavigationLinkItemData[];
 }
 
-export interface IHeaderGetters {
-  getLinks: ILink[];
+export interface HeaderGetters {
+  getLinks: NavigationLinkItemData[];
 }
 
-export interface IHeaderActions {
-  setLinks: (links: ILink[]) => void;
+export interface HeaderActions {
+  setLinks: (links: NavigationLinkItemData[]) => void;
 }
 
 export const useHeaderStore: StoreDefinition<
   'header-store',
-  IHeaderState,
-  IHeaderGetters,
-  IHeaderActions
+  HeaderState,
+  HeaderGetters,
+  HeaderActions
 > = defineStore('header-store', {
-  state: (): IHeaderState => ({
+  state: (): HeaderState => ({
     links: [],
   }),
 
   getters: {
-    getLinks: (state: IHeaderState): ILink[] => state.links,
+    getLinks: (state: HeaderState): NavigationLinkItemData[] => state.links,
   },
 
   actions: {
-    setLinks(links: ILink[]): void {
+    setLinks(links: NavigationLinkItemData[]): void {
       this.links = links;
     },
   },

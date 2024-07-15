@@ -1,18 +1,18 @@
 <script setup lang="ts">
-import type { IBlogAuthorPage } from "@/services/contentful/controllers/blogAuthor.ts";
+import type { AuthorPageData } from "@/services/contentful/types/controllers/blog/author/get-controller.d.ts";
 import TopographyHeading from "@/components/topography/Heading.vue";
 import BackButton from "@/components/common/BackButton.vue";
 import defaultBackground from "@/assets/images/author/author-bg.png";
-import { weservImage } from "@/services/weserv.ts";
+import { useWsrvImage } from "@/composables/useWsrv.ts";
 
-interface IProps {
-  author: IBlogAuthorPage;
+interface ComponentProps {
+  author: AuthorPageData;
 }
 
-const props = defineProps<IProps>();
+const props = defineProps<ComponentProps>();
 
 const backgroundUrl: string = props.author.background_url
-  ? weservImage({ imageUrl: props.author.background_url, width: 1400 })
+  ? useWsrvImage({ imageUrl: props.author.background_url, width: 1400 })
   : defaultBackground;
 </script>
 
@@ -36,8 +36,8 @@ const backgroundUrl: string = props.author.background_url
       <div class="w-full max-w-7xl mx-auto px-6 md:px-8">
         <div class="flex items-center justify-center sm:justify-start relative z-10 mb-5">
           <img
-            :src="weservImage({ imageUrl: author.image_url, width: 200 })"
-            :srcset="`${weservImage({ imageUrl: author.image_url, width: 400 })} 2x`"
+            :src="useWsrvImage({ imageUrl: author.image_url, width: 200 })"
+            :srcset="`${useWsrvImage({ imageUrl: author.image_url, width: 400 })} 2x`"
             :alt="author.name"
             class="border-4 border-solid border-white rounded-full w-[200px]"
           >
@@ -45,7 +45,6 @@ const backgroundUrl: string = props.author.background_url
 
         <div class="flex items-center md:items-start justify-center flex-col sm:flex-row max-sm:gap-5 sm:justify-between mb-5">
           <div class="block w-full md:w-1/2">
-
             <TopographyHeading
               class="mb-1 max-sm:text-center"
               :level="1"

@@ -1,24 +1,24 @@
 <script setup lang="ts">
 import type { Ref } from "vue";
-import type { IBlogPostCard } from "@/services/contentful/controllers/blogPost.ts";
+import type { PostCardData } from "@/services/contentful/types/controllers/blog/post/list-controller.d.ts";
 import BlogCardListGrid from "@/components/blog/list/CardGrid.vue";
 import BlogListCard from "@/components/blog/list/Card.vue";
 import Heading from "@/components/topography/Heading.vue";
-import { getBlogPosts } from "@/services/contentful/controllers/blogPost.ts";
+import { getBlogPosts } from "@/services/contentful/controllers/blog/post/list-controller.ts";
 
-interface IProps {
+interface ComponentProps {
   authorSlug: string;
 }
 
-const props = defineProps<IProps>();
+const props = defineProps<ComponentProps>();
 
 const {
   data: posts,
 }: {
-  data: Ref<IBlogPostCard[]>;
+  data: Ref<PostCardData[]>;
 } = await useAsyncData(
   `author-posts-${props.authorSlug}`,
-  async (): Promise<IBlogPostCard[]> => await getBlogPosts({
+  async (): Promise<PostCardData[]> => await getBlogPosts({
     authorSlug: props.authorSlug,
   }),
 );

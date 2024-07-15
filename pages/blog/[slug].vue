@@ -1,22 +1,22 @@
 <script setup lang="ts">
 import type { RouteLocationNormalizedLoaded } from "vue-router";
 import type { Ref } from "vue";
-import type { IBlogPostPage } from "@/services/contentful/controllers/blogPost.ts";
+import type { PostPageData } from "@/services/contentful/types/controllers/blog/post/get-controller.d.ts";
 import BlogPostHeader from "@/components/blog/post/Header.vue";
 import OtherPosts from "@/components/blog/post/OtherPosts.vue";
 import BlogPostContent from "@/components/blog/post/Content.vue";
-import { getBlogPost } from "@/services/contentful/controllers/blogPost.ts";
 import { useGetMeta } from "@/composables/useMeta.ts";
+import { getBlogPost } from "@/services/contentful/controllers/blog/post/get-controller.ts";
 
 const route: RouteLocationNormalizedLoaded = useRoute();
 
 const {
   data: postData,
 }: {
-  data: Ref<IBlogPostPage>;
+  data: Ref<PostPageData>;
 } = await useAsyncData(
   `post-${route.params.slug}`,
-  async (): Promise<IBlogPostPage> => await getBlogPost(route.params.slug as string),
+  async (): Promise<PostPageData> => await getBlogPost(route.params.slug as string),
 );
 
 if (!postData.value) {
@@ -26,10 +26,7 @@ if (!postData.value) {
   });
 }
 
-const metaData: object = await useGetMeta(
-  postData.value.meta,
-  route,
-);
+const metaData: object = await useGetMeta(postData.value.meta, route);
 
 useHead(metaData);
 </script>

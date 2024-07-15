@@ -1,9 +1,9 @@
 <script setup lang="ts">
-export interface IProps {
+export interface ComponentProps {
   type: 'twitter' | 'instagram';
 }
 
-defineProps<IProps>();
+defineProps<ComponentProps>();
 </script>
 
 <template>

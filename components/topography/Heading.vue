@@ -1,10 +1,10 @@
 <script setup lang="ts">
-interface IProps {
+interface ComponentProps {
   level: 1 | 2 | 3 | 4 | 5 | 6;
   tag?: string;
 }
 
-defineProps<IProps>();
+defineProps<ComponentProps>();
 
 const classesMap: {
   [key: number]: string;

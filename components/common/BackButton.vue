@@ -1,11 +1,11 @@
 <script setup lang="ts">
 import type { Router } from "vue-router";
 
-interface IProps {
+interface ComponentProps {
   color?: 'white';
 }
 
-withDefaults(defineProps<IProps>(), {
+withDefaults(defineProps<ComponentProps>(), {
   color: 'white',
 });
 

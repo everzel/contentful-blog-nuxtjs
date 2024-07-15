@@ -1,24 +1,24 @@
 <script setup lang="ts">
-import type { IBlogPostCard } from "@/services/contentful/controllers/blogPost.ts";
 import type { Ref } from "vue";
+import type { PostCardData } from "@/services/contentful/types/controllers/blog/post/list-controller.d.ts";
 import BlogListCard from "@/components/blog/list/Card.vue";
 import BlogCardListGrid from "@/components/blog/list/CardGrid.vue";
 import TopographyHeading from "@/components/topography/Heading.vue";
-import { getBlogPosts } from "@/services/contentful/controllers/blogPost.ts";
+import { getBlogPosts } from "~/services/contentful/controllers/blog/post/list-controller.ts";
 
-interface IProps {
+interface ComponentProps {
   exceptedSlugs?: string[];
 }
 
-const props = defineProps<IProps>();
+const props = defineProps<ComponentProps>();
 
 const {
   data: posts,
 }: {
-  data: Ref<IBlogPostCard[]>;
+  data: Ref<PostCardData[]>;
 } = await useAsyncData(
   `other-posts-${props.exceptedSlugs?.join(',')}`,
-  async (): Promise<IBlogPostCard[]> => await getBlogPosts({
+  async (): Promise<PostCardData[]> => await getBlogPosts({
     exceptedSlugs: props.exceptedSlugs,
     limit: 3,
   }),

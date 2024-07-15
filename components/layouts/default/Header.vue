@@ -1,21 +1,20 @@
 <script setup lang="ts">
 import type { Ref } from "vue";
-import type { INavigation } from "@/services/contentful/controllers/navigation.ts";
-import type { ILink } from "@/services/contentful/controllers/link.ts";
-import type { IHeaderActions, IHeaderGetters, IHeaderState } from "@/stores/header.ts";
-import { getNavigation } from "@/services/contentful/controllers/navigation.ts";
+import type { Store } from "pinia";
+import type { NavigationItemData, NavigationLinkItemData } from "@/services/contentful/types/controllers/navigation/get-controller.d.ts";
+import type { HeaderState, HeaderGetters, HeaderActions } from "@/stores/header.ts";
 import Logo from "@/components/common/Logo.vue";
 import { useHeaderStore } from "@/stores/header.ts";
-import type { Store } from "pinia";
+import { getNavigationItem } from "@/services/contentful/controllers/navigation/get-controller.ts";
 
 const isOpen: Ref<boolean> = ref(false);
-const links: Ref<ILink[]> = ref([]);
+const links: Ref<NavigationLinkItemData[]> = ref([]);
 
 const store: Store<
   'header-store',
-  IHeaderState,
-  IHeaderGetters,
-  IHeaderActions
+  HeaderState,
+  HeaderGetters,
+  HeaderActions
 > = useHeaderStore();
 
 if (store.getLinks.length) {
@@ -24,14 +23,14 @@ if (store.getLinks.length) {
   const {
     data: navigationData,
   }: {
-    data: Ref<INavigation>;
+    data: Ref<NavigationItemData>;
   } = await useAsyncData(
     'header-navigation',
-    async (): Promise<INavigation> => await getNavigation('header'),
+    async (): Promise<NavigationItemData> => await getNavigationItem('header'),
   );
 
   links.value = navigationData.value.links;
-  store.setLinks(navigationData.value.links);
+  store.setLinks(links.value);
 }
 </script>
 

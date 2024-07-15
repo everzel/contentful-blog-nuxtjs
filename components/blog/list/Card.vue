@@ -1,14 +1,14 @@
 <script setup lang="ts">
-import type { IBlogPostCard } from "@/services/contentful/controllers/blogPost.ts";
+import type { PostCardData } from "@/services/contentful/types/controllers/blog/post/list-controller.d.ts";
 import BlogAuthorCard from "@/components/blog/common/AuthorCard.vue";
 import { useFormatDate } from "@/composables/useDate.ts";
-import { weservImage } from "@/services/weserv.ts";
+import { useWsrvImage } from "@/composables/useWsrv.ts";
 
-interface IProps {
-  post: IBlogPostCard;
+interface ComponentProps {
+  post: PostCardData;
 }
 
-defineProps<IProps>();
+defineProps<ComponentProps>();
 </script>
 
 <template>
@@ -22,8 +22,8 @@ defineProps<IProps>();
 
     <div class="flex items-center">
       <img
-        :src="weservImage({ imageUrl: post.image_url, width: 380 })"
-        :srcset="`${weservImage({ imageUrl: post.image_url, width: 760 })} 2x`"
+        :src="useWsrvImage({ imageUrl: post.image_url, width: 380 })"
+        :srcset="`${useWsrvImage({ imageUrl: post.image_url, width: 760 })} 2x`"
         :alt="post.name"
         class="rounded-t-2xl w-full min-h-[200px] md:min-h-[220px]"
       >
